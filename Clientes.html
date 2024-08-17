@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figuras y imagen escalables y móviles</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+     
+        body {
+            background-color: #fafafa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: opacity 0.5s ease-in-out;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .contenedor-principal {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 500px;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        .contenedor {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .figura {
+            position: absolute;
+            transition: opacity 0.3s ease;
+        }
+        #cuadrado1 {
+            width: 180px;
+            height: 370px;
+            background-color:#FCF4EB;;
+            left: 13%;
+            top: 50px;
+        }
+        #cuadrado2 {
+            width: 190px;
+            height: 350px;
+            background-color: white;
+            left: 24%;
+            top: 150px;
+        }
+        #circulo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            left: 28%;
+            top: 110px;
+            background-size: cover;
+            background-position: center;
+        }
+        #imagen {
+            width: 80px;
+            left: 65%;
+            top: 110px;
+        }
+        #texto {
+            position: absolute;
+            padding: 20px;
+            color: #333;
+             font-family: 'Montserrat', sans-serif;
+           font-size: 15px;
+            text-align: left;
+            top: 25px;
+        }
+        #texto-esquina {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            margin: 0;
+            padding: 5px;
+            font-family: calibri;
+            font-size: 14px;
+            color: #333;
+        }
+
+        @media (max-width: 290px) {
+            #cuadrado1 {
+                width: 60%;
+                height: 310px;
+                left: 15%;
+                top: 15%;
+            }
+            #cuadrado2 {
+                width: 60%;
+                height: 290px;
+                left: 25%;
+                top: 30%;
+            }
+            #circulo {
+                width: 50px;
+                height: 50px;
+                left: 20%;
+                top: 25%;
+            }
+            #imagen {
+                width: 65px;
+                left: 65%;
+                top: 25%;
+            }
+            #texto {
+                font-size: 13px;
+                padding: 15px;
+            }
+            #texto-esquina {
+                font-size: 12px;
+            }
+        }
+        @media (min-width: 301px) and (max-width: 600px) {
+            #cuadrado1 {
+                width: 70%;
+                height: 340px;
+                left: 10%;
+                top: 60px;
+            }
+            #cuadrado2 {
+                width: 70%;
+                height: 320px;
+                left: 20%;
+                top: 140px;
+            }
+            #circulo {
+                width: 55px;
+                height: 55px;
+                left: 25%;
+                top: 100px;
+            }
+            #imagen {
+                width: 70px;
+                left: 75%;
+                top: 100px;
+            }
+            #texto {
+                font-size: 17px;
+                padding: 18px;
+            }
+            #texto-esquina {
+                font-size: 13px;
+            }
+        }
+        @media (min-width: 601px) {
+            #cuadrado1 {
+                width: 50%;
+                height: 100%;
+                left: 10%;
+                top: 1%;
+            }
+            #cuadrado2 {
+                width: 60%;
+                height: 65%;
+                left: 20%;
+                top: 15%;
+            }
+            #circulo {
+                width: 75px;
+                height: 75px;
+                left: 15%;
+                top: 10%;
+            }
+            #imagen {
+                width: 100px;
+                left: 70%;
+                top: 8%;
+            }
+            #texto {
+                font-size: 17px;
+                padding: 18px;
+            }
+            #texto-esquina {
+                font-size: 13px;
+            }
+        }
+
+        .brand-logo {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 11;
+            opacity: 0.8;
+            mix-blend-mode: difference;
+            filter: invert(1);
+            cursor: pointer;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .brand-logo img {
+            height: 40px;
+        }
+
+        .indicador-linea {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #e0e0e0;
+            z-index: 1000;
+        }
+
+        .indicador-progreso {
+            height: 100%;
+            width: 0;
+            background-color: black;
+            transition: width 0.3s ease-in-out;
+        }
+        @media (min-width: 601px) {
+            .indicador-linea {
+                display: none;
+            }
+        }
+
+        .fade-out {
+            opacity: 0 !important;
+            visibility: hidden !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor-principal">
+        <div id="cambio0" class="contenedor">
+            <div id="cuadrado1" class="figura"></div>
+            <div id="cuadrado2" class="figura">
+                <p id="texto">Nací en el año del dragón y su colgante me encantó desde que lo vi. Combina perfecto con todo lo que me ponga. Gracias.</p>
+                <p id="texto-esquina"><b>Maria</b></p>
+            </div>
+            <div id="circulo" class="figura" style="background-image: url('Maria.jpg');"></div>
+            <img id="imagen" class="figura" src="Signos.png" alt="quotes">
+        </div>
+
+        <div id="cambio1" class="contenedor">
+            <div id="cuadrado1" class="figura"></div>
+            <div id="cuadrado2" class="figura">
+                <p id="texto"> Su colgante es hermoso. Lo recomiendo a todos los que nacieron en el año del dragón.</p>
+                <p id="texto-esquina"><b>Luz</b></p>
+            </div>
+            <div id="circulo" class="figura" style="background-image: url('Lus.jpg');"></div>
+               <img id="imagen" class="figura" src="Signos.png" alt="quotes">
+        </div>
+     
+        <div id="cambio2" class="contenedor">
+            <div id="cuadrado1" class="figura"></div>
+            <div id="cuadrado2" class="figura">
+                <p id="texto">
+Mi novia se enamoró del colgante que le regalé al descubrir el mensaje interior que la emocionó. Creo que nunca olvidará este regalo.</p>
+                <p id="texto-esquina"><b>Juan</b></p>
+            </div>
+            <div id="circulo" class="figura" style="background-image: url('Juan.jpg');"></div>
+               <img id="imagen" class="figura" src="Signos.png" alt="quotes">
+        </div>
+
+        <div class="indicador-linea">
+            <div class="indicador-progreso"></div>
+        </div>
+    </div>
+
+    <div class="brand-logo" id="brandLogo">
+        <img src="this.png" alt="Logo de la Marca"/>
+    </div>
+
+    <script>
+        let currentChange = 0;
+        const changes = document.querySelectorAll('.contenedor');
+        let startX, moveX;
+        let isMoving = false;
+
+        document.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            isMoving = true;
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!isMoving) return;
+            moveX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', () => {
+            if (!isMoving) return;
+            isMoving = false;
+            const diff = startX - moveX;
+            
+            if (Math.abs(diff) > 50) { // Umbral de deslizamiento
+                if (diff > 0 && currentChange < changes.length - 1) {
+                    // Deslizar hacia la izquierda
+                    slideToNext();
+                } else if (diff < 0 && currentChange > 0) {
+                    // Deslizar hacia la derecha
+                    slideToPrevious();
+                }
+            }
+        });
+
+        function slideToNext() {
+            if (currentChange < changes.length - 1) {
+                changes[currentChange].style.transform = 'translateX(-100%)';
+                currentChange++;
+                changes[currentChange].style.transform = 'translateX(0)';
+                animateElements(changes[currentChange]);
+                updateIndicator();
+            }
+        }
+
+        function slideToPrevious() {
+            if (currentChange > 0) {
+                changes[currentChange].style.transform = 'translateX(100%)';
+                currentChange--;
+                changes[currentChange].style.transform = 'translateX(0)';
+                animateElements(changes[currentChange]);
+                updateIndicator();
+            }
+        }
+
+        function animateElements(container) {
+            const elements = container.querySelectorAll('.figura');
+            elements.forEach((el) => {
+                el.style.opacity = '0';
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                }, 300);
+            });
+        }
+
+        function updateIndicator() {
+            const indicador = document.querySelector('.indicador-progreso');
+            const progress = ((currentChange + 1) / changes.length) * 100;
+            indicador.style.width = `${progress}%`;
+        }
+
+        // Añadir compatibilidad con mouse para pruebas en desktop
+        let isMouseDown = false;
+        document.addEventListener('mousedown', (e) => {
+            startX = e.clientX;
+            isMouseDown = true;
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isMouseDown) return;
+            moveX = e.clientX;
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (!isMouseDown) return;
+            isMouseDown = false;
+            const diff = startX - moveX;
+            
+            if (Math.abs(diff) > 50) {
+                if (diff > 0 && currentChange < changes.length - 1) {
+                    slideToNext();
+                } else if (diff < 0 && currentChange > 0) {
+                    slideToPrevious();
+                }
+            }
+        });
+
+        // Inicializar la posición de los contenedores
+        changes.forEach((change, index) => {
+            if (index !== 0) {
+                change.style.transform = 'translateX(100%)';
+            }
+        });
+
+        // Animar elementos del primer contenedor al cargar la página
+        window.addEventListener('load', () => {
+            animateElements(changes[0]);
+            updateIndicator();
+        });
+
+        // Efecto de desvanecimiento y redirección al presionar el brand logo
+        document.getElementById('brandLogo').addEventListener('click', function() {
+            document.body.classList.add('fade-out');
+            document.querySelector('.contenedor-principal').classList.add('fade-out');
+            document.getElementById('brandLogo').classList.add('fade-out');
+            
+            setTimeout(function() {
+                window.location.href = 'index.html';
+            }, 500);
+        });
+    </script>
+</body>
+</html>

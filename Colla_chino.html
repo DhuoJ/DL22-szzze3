@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Two Rectangle Layout</title>
+    <style>
+        body {
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+        .rectangle {
+            width: 370px;
+            height: 750px;
+            background-color: white;
+            box-shadow: 2px 1px 1px 1px rgba(0, 0, 0, 0.2);
+        }
+        .rectangle1 {
+            width: 500px;
+            height: 750px;
+            background-color: white;
+            border-radius: 0.3rem;
+            box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+        }
+        .left-rectangle {
+            margin-right: 5px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 0 0 0.3rem 0.3rem;
+        }
+        .right-rectangle {
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            display: flex;
+            justify-content: center;
+        }
+        .content-wrapper {
+            max-width: 90%;
+            width: 100%;
+        }
+        .image-container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            transform-origin: 0 0;
+        }
+        .image-container.zoomed img {
+            transform: scale(2);
+        }
+        .image-container::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('lupa.svg') no-repeat center center;
+            background-size: 50px 50px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .image-container:hover::after {
+            opacity: 1;
+        }
+        .image-container:hover img {
+            cursor: url('lupa.svg'), auto;
+        }
+        #sticky-banner {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            padding: 10px 0;
+            z-index: 1000;
+            height: 40px;
+            box-shadow: 0px 1px 1px black;
+        }
+        @media (max-width: 900px) {
+            body {
+                align-items: flex-start;
+                padding-top: 0;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+            #sticky-banner {
+                display: block;
+            }
+            .container {
+                flex-direction: column;
+                width: 100%;
+                max-width: 800px;
+                margin: 40px auto 0;
+                height: auto;
+                flex-grow: 1;
+                display: flex;
+            }
+            .rectangle,
+            .rectangle1 {
+                width: 100%;
+                margin-right: 0;
+            }
+            .left-rectangle {
+                height: 400px;
+                margin-bottom: 20px;
+                border-radius: 0;
+            }
+            .right-rectangle {
+                flex-grow: 1;
+                height: auto;
+                max-height: none;
+                overflow-y: visible;
+                margin-bottom: 0;
+            }
+            .image-container {
+                height: 105%;
+            }
+            .brand-logo {
+                position: absolute;
+                top: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 11;
+                opacity: 0.8;
+                mix-blend-mode: difference;
+                filter: invert(1);
+            }
+            .brand-logo img {
+                height: 35px;
+            }
+        }
+        .lupa-icon {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div id="sticky-banner">
+        <div class="small-logo" style="position: absolute; top: 16px; left: 10px;">
+            <img src="ey.png" alt="Atras" style="height: 22px;width :30px"/>
+        </div>
+        <div class="overlay" id="overlay"></div>
+        <div class="brand-logo" id="brandLogo" onclick="reloadPage()">
+            <img src="this.png" alt="Logo de la Marca"/>
+        </div>
+    </div>
+    <div class="container">
+        <div class="rectangle left-rectangle">
+            <div class="image-container">
+                <img src="Dragon.png" alt="Description" id="product-image"/>
+            </div>
+            <img src="lupa.png" alt="Lupa" class="lupa-icon">
+        </div>
+        <div class="rectangle1 right-rectangle">
+            <div class="content-wrapper">
+                <h2 style="font-family: Century Gothic; font-style: italic; font-weight: lighter;">Collar Colgante Dragon Chino</h2>
+                <h4 style="font-family: calibri; font-weight: lighter; position: relative; margin-top: -17px;">Un colgante perfecto para este año</h4>
+                <h2 style="font-family: calibri; font-weight: normal; margin-top: -5px;">S/.290</h2>
+                <h5 style="font-family: calibri; font-weight: lighter; letter-spacing: 0.8px;">
+                    Los dragones son criaturas legendarias del folclore chino. Simbolizan poderes como la fuerza, la sabiduría, la prosperidad y la protección. Y hasta el 28 de enero del 2025 estamos bajo su régimen. ¿Lo sabías? Llevar
+                    este colgante no solo es una celebración de esta poderosa criatura, sino también un talismán para atraer fuerza, sabiduría y prosperidad a tu vida.
+                </h5>
+                <ul style="font-family: calibri;padding-left: 18px; text-align: left ;padding-top 10px;">
+                    <li style="margin-bottom: 10px;"><strong>Material:</strong> plata 950 con baño de rodio</li>
+                    <li style="margin-bottom: 10px;"><strong>Medida de dije:</strong> 4 cm altura aproximada</li>
+                    <li><strong>Largo de cadena: </strong>50 cm aproximado</li>
+                </ul>
+                <br/>
+                <br/>
+                <br/>
+                <button id="whatsappButton" onclick="sendWhatsApp()" style="
+                    background-color: #128c7e;
+                    color: white;
+                    border: none;
+                    border-radius: 20px;
+                    padding: 10px 10px;
+                    font-family: calibri;
+                    font-size: 14px;
+                    cursor: pointer;
+                    display: block;
+                    margin-top: 20px;
+                    width: 100%;
+                    font-weight: bold;
+                    transition: transform 0.3s ease;
+                ">
+                    <img src="whatsap.png" alt="WhatsApp_icon" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 8px;"/>
+                    Comprar aquí por WhatsApp
+                </button>
+                <br/>
+                <p style="text-align: center; font-family: calibri; margin-top: 20px;">Medios de pago disponibles</p>
+                <div style="display: flex; justify-content: center; margin-top: 10px;">
+                    <img src="bcp.png" alt="Medio de pago 1" style="width: 60px; height: 30px; margin-right: 10px;"/>
+                    <img src="yape.png" alt="Medio de pago 2" style="width: 60px; height: 30px;"/>
+                </div>
+                <hr style="width: 80%; margin: 20px auto;"/>
+                <div style="display: flex; align-items: center; justify-content: center; margin-top: 20px;">
+                    <img src="carro.png" alt="Icono de envío" style="width: 20px; height: 20px; margin-right: 10px;"/>
+                    <p style="font-family: calibri; margin: 0;">Envíos a Lima y provincia</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const imageContainer = document.querySelector(".image-container");
+        const img = document.getElementById("product-image");
+        let isZoomed = false;
+        let lastTouchEnd = 0;
+        let startX = 0;
+        let startY = 0;
+        let translateX = 0;
+        let translateY = 0;
+        let isDragging = false;
+
+        function toggleZoom(e) {
+            isZoomed = !isZoomed;
+            imageContainer.classList.toggle("zoomed");
+            if (isZoomed) {
+                const rect = imageContainer.getBoundingClientRect();
+                const x = (e.clientX || e.touches[0].clientX) - rect.left;
+                const y = (e.clientY || e.touches[0].clientY) - rect.top;
+                const xPercent = (x / rect.width) * 100;
+                const yPercent = (y / rect.height) * 100;
+                img.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+                translateX = translateY = 0;
+                updateImagePosition();
+            } else {
+                translateX = translateY = 0;
+                updateImagePosition();
+            }
+        }
+
+        function handleTouchStart(e) {
+            if (e.touches.length > 1) return; // Ignorar multi-touch
+            isDragging = true;
+            const touch = e.touches[0];
+            startX = touch.clientX - translateX;
+            startY = touch.clientY - translateY;
+        }
+
+        function handleTouchMove(e) {
+            if (!isZoomed || !isDragging || e.touches.length > 1) return;
+            e.preventDefault();
+            const touch = e.touches[0];
+            const newTranslateX = touch.clientX - startX;
+            const newTranslateY = touch.clientY - startY;
+            
+            // Aplicar una interpolación suave
+            translateX += (newTranslateX - translateX) * 0.2;
+            translateY += (newTranslateY - translateY) * 0.2;
+            
+            requestAnimationFrame(updateImagePosition);
+        }
+
+        function handleTouchEnd() {
+            isDragging = false;
+        }
+
+        function updateImagePosition() {
+            img.style.transform = `scale(${isZoomed ? 2 : 1}) translate(${translateX}px, ${translateY}px)`;
+        }
+
+        imageContainer.addEventListener("click", toggleZoom);
+        imageContainer.addEventListener("touchstart", (e) => {
+            if (e.touches.length > 1) return; // Ignorar multi-touch
+            const now = new Date().getTime();
+            const timeSince = now - lastTouchEnd;
+            if (timeSince < 300) {
+                toggleZoom(e);
+            }
+            lastTouchEnd = now;
+        });
+
+        imageContainer.addEventListener("touchstart", handleTouchStart);
+        imageContainer.addEventListener("touchmove", handleTouchMove);
+        imageContainer.addEventListener("touchend", handleTouchEnd);
+        imageContainer.addEventListener("touchcancel", handleTouchEnd);
+
+        // Nueva funcionalidad para dispositivos con cursor
+        function startDrag(e) {
+            if (!isZoomed) return;
+            isDragging = true;
+            startX = e.clientX - translateX;
+            startY = e.clientY - translateY;
+        }
+
+        function drag(e) {
+            if (!isZoomed || !isDragging) return;
+            e.preventDefault();
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+            updateImagePosition();
+        }
+
+        function stopDrag() {
+            isDragging = false;
+        }
+
+        imageContainer.addEventListener("mousedown", startDrag);
+        window.addEventListener("mousemove", drag);
+        window.addEventListener("mouseup", stopDrag);
+    </script>
+    <script>
+        function sendWhatsApp() {
+            var phoneNumber = "1234567890"; // Reemplaza con tu número de WhatsApp
+            var message = "Hola, estoy interesado en el Collar Colgante Dragon Chino";
+            var whatsappUrl = "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(message);
+            var button = document.getElementById("whatsappButton");
+            button.style.transform = "scale(0.95)";
+            setTimeout(function() {
+                button.style.transform = "scale(1)";
+                window.open(whatsappUrl, '_blank');
+            }, 200);
+        }
+    </script>
+    <script>
+        function fadeAndRedirect(url) {
+            document.body.style.transition = 'opacity 0.5s ease-in-out';
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 500);
+        }
+
+        function handleBrandLogoClick(event) {
+            event.preventDefault();
+            fadeAndRedirect('index.html');
+        }
+
+        function handleSmallLogoClick(event) {
+            event.preventDefault();
+            fadeAndRedirect('productos.html');
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const brandLogo = document.getElementById('brandLogo');
+            if (brandLogo) {
+                brandLogo.addEventListener('click', handleBrandLogoClick);
+            }
+
+            const smallLogo = document.querySelector('.small-logo img');
+            if (smallLogo) {
+                smallLogo.addEventListener('click', handleSmallLogoClick);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DHUO Layout Escalado</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+        .container {
+            display: flex;
+            width: 65%;
+            height: 80%;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .left-square {
+            width: 65%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            background-color: #FCF4EB;
+            padding: 20px;
+            padding-left: 5%;
+            box-sizing: border-box;
+            overflow-y: auto;
+            border-right: 1px solid gray;
+        }
+        .right-square {
+            width: 35%;
+            background-image: url('ringo.png');
+            background-size: 1500px;
+            background-position: bottom 0px right -500px;
+            background-color: #FCF4EB;
+        }
+        h1 {
+            margin-bottom: 70px;
+            font-size: 30px;
+            font-weight: lighter;
+        }
+        h2 {
+            font-size: 18px;
+            line-height: 1.6;
+            max-width: 75%;
+            font-weight: lighter;
+        }
+        .right-square h1 {
+            display: none;
+        }
+
+        .brand-logo {
+            display: none;
+        }
+
+        .small-image {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            body, html {
+                display: block;
+                height: auto;
+            }
+            .container {
+                width: 100%;
+                height: auto;
+                flex-direction: column;
+                box-shadow: none;
+            }
+            .right-square {
+                width: 100%;
+                height: 100vh;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                background-position: bottom 0px right 46%;
+            }
+            .left-square {
+                width: 100%;
+                height: auto;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                transform: translateY(calc(100% - 60px));
+                transition: transform 0.3s ease-out;
+                box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+            }
+            .left-square h1 {
+                display: none;
+            }
+            .right-square h1 {
+                display: block;
+                position: fixed;
+                top: 75%;
+                left: 135px;
+                transform: translateX(-50%);
+                text-align: center;
+                font-weight: lighter;
+                z-index: 10;
+                transition: opacity 0.3s ease-out;
+                padding: 10px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            .left-square.active {
+                transform: translateY(20%);
+            }
+            h2 {
+                font-size: 23px;
+                line-height: 1.6;
+                max-width: 80%;
+                font-weight: lighter;
+            }
+
+            .brand-logo {
+                display: block;
+                position: absolute;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 11;
+                opacity: 0.8;
+                mix-blend-mode: difference;
+                filter: invert(1);
+                cursor: pointer;
+                transition: opacity 0.5s ease-in-out;
+            }
+
+            .brand-logo img {
+                height: 40px;
+            }
+
+            .small-image {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                margin-bottom: 20px;
+                margin-top: -5px;
+            }
+
+            .small-image img {
+                max-width: 100px;
+                height: 30px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .right-square h1 {
+                display: block;
+                position: fixed;
+                top: 78%;
+                left: 110px;
+                font-size: 25px;
+                transform: translateX(-50%);
+                text-align: center;
+                font-weight: lighter;
+                z-index: 10;
+                transition: opacity 0.3s ease-out;
+                padding: 10px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-square">
+            <h1>Acerca de DHUO</h1>
+            <div class="small-image">
+                <img src="scrool.png" alt="scrool">
+            </div>
+            <h2>Luego de algunos años diseñando y creando belleza en metales preciosos, dos entusiastas de la joyería hemos unido propuestas y entusiasmos en un desafío común: crear una joyería divertida, fresca e inusual. ¿Quienes? Majo y Amaurio, fundadora y fundador de Dhuo.</h2><br>
+            <h2>Nos conocimos hace poco más de un año, cada uno con caminos y experiencias distintos en el mundo de la joyería, que ahora se complementan con especial armonía. Majo, con años de valioso conocimiento en la producción y comercialización de joyería, se ha embarcado recientemente en sus propios diseños asistidos por tecnología CAD e impresión 3D. Por su parte, Amaurio cuenta con su propio bagaje y recorrido: desde estudios en la Gestión de Empresas de Moda y Lujo hasta el reconocimiento de instituciones de alto prestigio como Adex por sus habilidades en el diseño de joyas.</h2>
+        </div>
+        <div class="right-square">
+            <h1>Acerca de DHUO</h1>
+            <div class="brand-logo" id="brandLogo">
+                <img src="this.png" alt="Logo de la Marca"/>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.innerWidth <= 768) {
+                const leftSquare = document.querySelector('.left-square');
+                let startY, currentY, initialTouchY;
+                let isDragging = false;
+                const minThreshold = window.innerHeight * 0.2;
+                const maxThreshold = window.innerHeight * 0.8;
+
+                leftSquare.addEventListener('touchstart', function(e) {
+                    startY = e.touches[0].clientY;
+                    initialTouchY = leftSquare.getBoundingClientRect().top;
+                    isDragging = true;
+                });
+
+                leftSquare.addEventListener('touchmove', function(e) {
+                    if (!isDragging) return;
+                    e.preventDefault();
+                    currentY = e.touches[0].clientY;
+                    const deltaY = startY - currentY;
+                    const newTop = initialTouchY - deltaY;
+
+                    const smoothedTop = Math.max(minThreshold, Math.min(newTop, maxThreshold));
+                    const percentage = (smoothedTop / window.innerHeight) * 100;
+
+                    leftSquare.style.transition = 'none';
+                    leftSquare.style.transform = `translateY(${percentage}%)`;
+                });
+
+                leftSquare.addEventListener('touchend', function() {
+                    isDragging = false;
+                    const currentTop = leftSquare.getBoundingClientRect().top;
+                    
+                    leftSquare.style.transition = 'transform 0.3s ease-out';
+                    if (currentTop > window.innerHeight * 0.5) {
+                        leftSquare.style.transform = 'translateY(calc(100% - 60px))';
+                    } else {
+                        leftSquare.style.transform = 'translateY(20%)';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
